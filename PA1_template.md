@@ -19,7 +19,7 @@ activity$date <- as.Date(activity$date, format="%Y-%m-%d")
 
 
 ## What is mean total number of steps taken per day?
-1. Make a histogram of the total number of steps taken per day
+Make a histogram of the total number of steps taken per day
 
 ```r
 steps_per_day <- aggregate(steps ~ date, activity, sum)
@@ -31,7 +31,7 @@ labs(title="Average Daily Activity Pattern", x="Interval", y="Number of steps")
 
 ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
 
-2. Calculate the mean ad median of the total number pf steps taken per day
+Calculate the mean ad median of the total number pf steps taken per day
 
 ```r
 round(mean(steps_per_day$steps), 0)
@@ -50,7 +50,7 @@ round(median(steps_per_day$steps), 0)
 ```
 
 ## What is the average daily activity pattern?
-1. Make a time series plot bewteen interval and average number of steps 
+Make a time series plot bewteen interval and average number of steps 
 
 ```r
 steps_per_interval <- aggregate(steps ~ interval, activity, mean)
@@ -62,7 +62,7 @@ labs(title="Average Daily Activity Pattern", x="Interval", y="Number of steps")
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
 
-2. Find the 5-min interval which contains the maximum number of steps
+Find the 5-min interval which contains the maximum number of steps
 
 ```r
 steps_per_interval$interval[which.max(steps_per_interval$steps)]
@@ -73,7 +73,7 @@ steps_per_interval$interval[which.max(steps_per_interval$steps)]
 ```
 
 ## Imputing missing values
-1. Calculate the total number of missing values in the dataset
+Calculate the total number of missing values in the dataset
 
 ```r
 sum(is.na(activity))
@@ -83,7 +83,7 @@ sum(is.na(activity))
 ## [1] 2304
 ```
 
-2. Replace the missing values with original mean value and creat a new dataset
+Replace the missing values with original mean value and creat a new dataset
 
 ```r
 activity2 <- merge(activity, steps_per_interval, by = "interval", suffixes = c("", ".y"))
@@ -92,7 +92,7 @@ activity2$steps[nas] <- activity2$steps.y[nas]
 activity2 <- activity2[, c(1:3)]
 ```
 
-3. Make a histogram of the total number of steps taken per day
+Make a histogram of the total number of steps taken per day
 
 ```r
 steps_per_day2 <- aggregate(steps ~ date, activity2, sum)
@@ -104,7 +104,7 @@ labs(title="Histogram of Steps Taken per Day", x="Number of Steps", y="Count")
 
 ![](PA1_template_files/figure-html/unnamed-chunk-9-1.png) 
 
-4. Calculate the mean ad median of the total number pf steps taken per day
+Calculate the mean ad median of the total number pf steps taken per day
 
 ```r
 round(mean(steps_per_day2$steps), 0)
@@ -122,10 +122,18 @@ round(median(steps_per_day2$steps), 0)
 ## [1] 10766
 ```
 
-5. There is no great difference between the estimates and the first part of this assignment. That is to say, the impact of imputing missing data on the estimates of the total daily number of steps in quite low.
+There is no great difference between the estimates and the first part of this assignment. That is to say, the impact of imputing missing data on the estimates of the total daily number of steps in quite low.
 
 ## Are there differences in activity patterns between weekdays and weekends?
-1. Creat a new factor variable "dayofweek" in the dataset "activity"
+Creat a new factor variable "dayofweek" in the dataset "activity"
+
+```r
+Sys.setlocale("LC_TIME", "English")
+```
+
+```
+## [1] "English_United States.1252"
+```
 
 ```r
 dayofweek <- function(date) {
@@ -149,10 +157,10 @@ head(activity)
 ## 6    NA 2012-10-01       25   weekday
 ```
 
-2. Make a panel plot to compare the activity patterns between workdays and weekend
+Make a panel plot to compare the activity patterns between workdays and weekend
 
 ```r
-steps_daytype <- aggregate(steps ~ interval+dayofweek, activity, mean)
+steps_daytype <- aggregate(steps ~ (interval+dayofweek), activity, mean)
 steps_daytype$interval = as.integer(levels(steps_daytype$interval))[steps_daytype$interval]
 ggplot(steps_daytype, aes(x=interval, y=steps)) +
 facet_grid(dayofweek ~ .) +
@@ -162,4 +170,3 @@ labs(title="Activity Pattern bewteen Weekday and Weekend", x="Interval", y="Numb
 
 ![](PA1_template_files/figure-html/unnamed-chunk-12-1.png) 
 
-##the end
