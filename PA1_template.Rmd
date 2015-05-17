@@ -1,9 +1,8 @@
 ---
 title: "Reproducible Research: Peer Assessment 1"
-author: "Wenqian WANG"
-date: "17/05/2015"
 output:
-  html_document
+  html_document:
+   keep_md: true
 ---
 This assignment focuses on the data of activity monitoring devices. Our data consists of the number of steps taken in 5 minute interval each day during two months. 
 

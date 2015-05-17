@@ -125,6 +125,7 @@ round(median(steps_per_day2$steps), 0)
 5. There is no great difference between the estimates and the first part of this assignment. That is to say, the impact of imputing missing data on the estimates of the total daily number of steps in quite low.
 
 ## Are there differences in activity patterns between weekdays and weekends?
+1. Creat a new factor variable "dayofweek" in the dataset "activity"
 
 ```r
 dayofweek <- function(date) {
@@ -148,6 +149,7 @@ head(activity)
 ## 6    NA 2012-10-01       25   weekday
 ```
 
+2. Make a panel plot to compare the activity patterns between workdays and weekend
 
 ```r
 steps_daytype <- aggregate(steps ~ interval+dayofweek, activity, mean)
